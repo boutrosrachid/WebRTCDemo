@@ -1,3 +1,4 @@
 Manifest-Version: 1.0
 Start-Class: hu.alerant.signalingserver.WebStaticApplication
 Dependencies: org.infinispan export
+Main-Class: org.springframework.boot.loader.WarLauncher
