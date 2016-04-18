@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
-@Component("ConversationsCache")
+@Component("applicationCache")
 @Scope("singleton")
 public class ConversationsCache {
 
@@ -21,7 +21,7 @@ public class ConversationsCache {
 
 	@PostConstruct
 	public void initCache() throws Exception {
-		container = (CacheContainer)new javax.naming.InitialContext().lookup("java:jboss/infinispan/container/conversationsCache");
+		container = (CacheContainer)new javax.naming.InitialContext().lookup("java:jboss/infinispan/container/applicationCache");
 		this.cache = container.getCache();
 	}
 
