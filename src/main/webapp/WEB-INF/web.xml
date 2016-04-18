@@ -20,8 +20,8 @@
     </servlet-mapping>
     
 	<resource-ref>
-	  <res-ref-name>infinispan/container/conversationsCache</res-ref-name>
-	  <lookup-name>java:jboss/infinispan/container/conversationsCache</lookup-name>
+	  <res-ref-name>infinispan/container/applicationCache</res-ref-name>
+	  <lookup-name>java:jboss/infinispan/container/applicationCache</lookup-name>
 	</resource-ref>
 
 </web-app>
