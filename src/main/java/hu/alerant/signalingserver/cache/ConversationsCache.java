@@ -1,6 +1,7 @@
 package hu.alerant.signalingserver.cache;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.infinispan.Cache;
 import org.infinispan.manager.CacheContainer;
@@ -25,12 +26,12 @@ public class ConversationsCache {
 		this.cache = container.getCache();
 	}
 
-	public HashMap<String, String> listConversations() {
-		HashMap<String, String> list = new HashMap<String, String>();
+	public HashMap<String, List<String>> listConversations() {
+		HashMap<String, List<String>> map = new HashMap();
 		for(ConversationCacheEntry c : this.cache.values()) {
-			list.put(c.conversationName, c.toString());
+			map.put(c.conversationName, c.members);
 		}
-		return list;
+		return map;
 	}
 
 	public void createConversation(String name) {

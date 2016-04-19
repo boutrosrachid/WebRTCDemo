@@ -1,6 +1,7 @@
 package hu.alerant.signalingserver.api;
 
 import java.util.Map;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +20,7 @@ public class RESTConversationQuery {
 	private ConversationsCache cache;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public @ResponseBody Map<String, String> listConversations() {
+    public @ResponseBody Map<String, List<String>> listConversations() {
 		return cache.listConversations();
     }
 }

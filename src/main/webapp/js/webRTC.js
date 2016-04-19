@@ -84,10 +84,12 @@ function WebRTC(config) {
 
 	this.signaling.onclose = function(event) {
 		WebRTC.instance.call('close', event);
+		WebRTC.instance = null;
 	};
 
 	this.signaling.onerror = function(event) {
 		WebRTC.instance.call('error', event);
+		WebRTC.instance = null;
 	};
 
 	this.preparePeerConnection = function(webRTC, member) {
