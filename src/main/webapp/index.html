@@ -47,7 +47,7 @@
 		var refreshConversationList = function(){
 			$.ajax({
 				type: 'GET',
-				url: '/WebRTCConference-1.0/conversations/list',
+				url: '/conversations/list',
 				success: function(data) {
 					var str = '<table width="250px" style="margin: 0 auto;">';
 					var count = 0;
@@ -114,7 +114,7 @@
 		var webRTC = null;
 		var webRTCConnect = function(convId) {
 			webRTC = new WebRTC({
-				wsURL : 'ws://localhost:8080/WebRTCConference-1.0/signaling?convId=' + convId,
+				wsURL : 'ws://webrtcdemo.openshift.local/signaling?convId=' + convId,
 				mediaConfig : {
 					video : true,
 					audio : true,
