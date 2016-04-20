@@ -136,7 +136,7 @@
 				console.log(JSON.stringify(event));
 				if(event.from && event.from != '') {
 					$('#partnerName').val(event.custom.memberName);
-					alert('Member with id ' + event.from + ' joined conversation');
+					alert('Member with id ' + event.custom.memberName + ' joined conversation');
 				}
 				refreshConversationList();
 			});
@@ -153,7 +153,7 @@
 
 			webRTC.on('left', function(webRTC, event) {
 				console.log(JSON.stringify(event));
-				alert(event.from + " left!");
+				alert($('#partnerName').val() + " left!");
 			});
 		};
 
