@@ -80,7 +80,7 @@ function WebRTC(config) {
 	};
 
 	this.waitForConnection = function (callback, interval) {
-		if (ws.readyState === 1) {
+		if (this.signaling.readyState === 1) {
 			callback();
     		} else {
 			var that = this;
