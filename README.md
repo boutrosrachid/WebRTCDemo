@@ -167,7 +167,9 @@ oc get pods
 ```
 
 ### Build and configure the appication on the master node
-On the OpenShift master node move to the wildfly81-dist-cache folder that was created when you copied the downloaded zip content to the master node. Set the currently active project to webrtcdemo and create all OpenShift resources required for the WebRTC demo application:
+On the OpenShift master node move to the wildfly81-dist-cache folder that was created when you copied the downloaded zip content to the master node. 
+If you have to use HTTP proxy to access the internet from OpenShift nodes then edit BuildConfiguration part in the webrtcdemo-template.json file according to [OpenShift's documentation](https://docs.openshift.com/enterprise/3.0/admin_guide/http_proxies.html#configuring-default-templates-for-proxies). Internet access is needed for the build process because the source files reside on GitHub.
+Set the currently active project to webrtcdemo and create all OpenShift resources required for the WebRTC demo application:
 
 ```
 oc project webrtcdemo
