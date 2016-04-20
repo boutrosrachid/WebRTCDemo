@@ -73,9 +73,23 @@ function WebRTC(config) {
 		}
 		var req = JSON.stringify(msg2Send);
 		console.log("res: " + req);
-		this.signaling.send(req);
+		var s = this.signaling;
+		this.waitForConnection(function () {
+			s.send(req);
+		}, 1000);
 	};
 
+	this.waitForConnection = function (callback, interval) {
+		if (ws.readyState === 1) {
+			callback();
+    		} else {
+			var that = this;
+			setTimeout(function () {
+				that.waitForConnection(callback, interval);
+			}, interval);
+		}
+	};
+	
 	this.signaling.onmessage = function(event) {
 		console.log("req: " + event.data);
 		var signal = JSON.parse(event.data);
