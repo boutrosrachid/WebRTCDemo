@@ -87,67 +87,47 @@ vi haproxy-config.template
 
 Modify the content in the following way (new rows that should be added to the existing content are highlighted in bold; other parts should be unchanged):
 
+```
 ...
-
 backend be_http_{{$cfgIdx}}
-
                  {{ else }}
-
  backend be_edge_http_{{$cfgIdx}}
-
                  {{ end }}
-
    mode http
-
    option redispatch
-
    option forwardfor
-
-   **{{ if (eq $cfgIdx "webrtcdemo_webrtcdemo-route") }}**
-
-   **balance url_param convId**
-
-   **{{ else }}**
-
-   balance leastconn
-
-   **{{ end }}**
-
-   timeout check 5000ms
-
-   http-request set-header X-Forwarded-Host %[req.hdr(host)]
-
-   http-request set-header X-Forwarded-Port %[dst_port]
-
-   http-request set-header X-Forwarded-Proto https if { ssl_fc }
-
-   {{ if (eq $cfg.TLSTermination "") }}
-
-     cookie OPENSHIFT_{{$cfgIdx}}_SERVERID insert indirect nocache httponly
-
-     http-request set-header X-Forwarded-Proto http
-
+```
+```
+   {{ if (eq $cfgIdx "webrtcdemo_webrtcdemo-route") }}
+   balance url_param convId
    {{ else }}
-
-     **{{ if (eq $cfgIdx "webrtcdemo_webrtcdemo-route") }}**
-
-     **#no cookie deifinition**
-
-     **{{ else }}**
-
-     cookie OPENSHIFT_EDGE_{{$cfgIdx}}_SERVERID insert indirect nocache httponly secure
-
-     **{{ end }}**
-
+   balance leastconn
    {{ end }}
-
+   timeout check 5000ms
+   http-request set-header X-Forwarded-Host %[req.hdr(host)]
+   http-request set-header X-Forwarded-Port %[dst_port]
+   http-request set-header X-Forwarded-Proto https if { ssl_fc }
+   {{ if (eq $cfg.TLSTermination "") }}
+     cookie OPENSHIFT_{{$cfgIdx}}_SERVERID insert indirect nocache httponly
+     http-request set-header X-Forwarded-Proto http
+   {{ else }}
+```
+```
+     {{ if (eq $cfgIdx "webrtcdemo_webrtcdemo-route") }}
+     #no cookie deifinition
+     {{ else }}
+     cookie OPENSHIFT_EDGE_{{$cfgIdx}}_SERVERID insert indirect nocache httponly secure
+     {{ end }}
+```
+```
+   {{ end }}
    http-request set-header Forwarded for=%[src],host=%[req.hdr(host)],proto=%[req.hdr(X-Forwarded-Proto)]
-
                  {{ range $idx, $endpoint := endpointsForAlias $cfg $serviceUnit }}
-
    server {{$endpoint.ID}} {{$endpoint.IP}}:{{$endpoint.Port}
-
 ...
+
+```
+
 
 
 
