@@ -114,6 +114,7 @@
 
 		var webRTC = null;
 		var webRTCConnect = function(convId) {
+			document.cookie="convId=" + convId + ";domain=webrtcdemo.openshift.local;path=/";
 			webRTC = new WebRTC({
 				wsURL : 'ws://webrtcdemo.openshift.local/signaling?convId=' + convId,
 				mediaConfig : {
