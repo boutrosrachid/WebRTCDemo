@@ -181,7 +181,7 @@ After about 2 minutes one running webrtcdemo and one active gossip POD must be i
 ## Test the application
 
 The application will listen to webrtcdemo.openshift.local host name. You have to map this host name to the IP address of the node that actually runs the HAProxy POD in your desktop's hosts file. 
-Be sure that you have access to that IP address (no blocking firewall is in between your desktop and that IP address)! 
+Be sure that you have access to that IP address on TCP port 443 (no blocking firewall is in between your desktop and that IP address)! 
 In order to access your application go to [https://webrtcdemo.openshift.local](https://webrtcdemo.openshift.local). [Be sure that you use a browser that supports WebRTC](http://iswebrtcreadyyet.com)
 and your desktop computer has a working camera device connected! 
 This demo solution was tested with Google Chrome 50.x. 
