@@ -34,6 +34,19 @@ public class ConversationsCache {
 		return map;
 	}
 
+	public HashMap<String, HashMap<String, List<String>>> listConversationsByNodes() {
+		HashMap<String, HashMap<String, List<String>>> map = new HashMap();
+		for(ConversationCacheEntry c : this.cache.values()) {
+			HashMap<String, List<String>> conversations = map.get(c.ownerHost);
+			if(conversations == null) {
+				conversations = new HashMap();
+				map.put(c.ownerHost, conversations);
+			}
+			conversations.put(c.conversationName, c.members);
+		}
+		return map;
+	}
+
 	public void createConversation(String name) {
 		ConversationCacheEntry c = new ConversationCacheEntry(name);
 		this.cache.put(name, c);

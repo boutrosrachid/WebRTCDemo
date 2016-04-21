@@ -7,10 +7,12 @@ public class ConversationCacheEntry implements Serializable {
 
 	String conversationName;
 	ArrayList<String> members;
+	String ownerHost;
 
 	ConversationCacheEntry(String conversationName) {
 		this.conversationName = conversationName;
 		members = new ArrayList<String>();
+		ownerHost = System.getProperty("jboss.node.name");
 	}
 
 	public String toString() {
