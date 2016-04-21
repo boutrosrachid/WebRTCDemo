@@ -180,7 +180,27 @@ After about 2 minutes one running webrtcdemo and one active gossip POD must be i
 
 ## Test the application
 
-The application will listen to webrtcdemo.openshift.local host name. You have to map this host name to the IP address of the node that actually runs the HAProxy POD in your desktop's hosts file. In order to access your application go to [https://webrtcdemo.openshift.local](https://webrtcdemo.openshift.local). If you want to rebuild your application (e.g. because of changes in the source code on GitHub) then go to the master node, login to OpenShift, set the currently active project to webrtcdemo and type the following:
+The application will listen to webrtcdemo.openshift.local host name. You have to map this host name to the IP address of the node that actually runs the HAProxy POD in your desktop's hosts file. 
+Be sure that you have access to that IP address (no blocking firewall is in between your desktop and that IP address)! 
+In order to access your application go to [https://webrtcdemo.openshift.local](https://webrtcdemo.openshift.local). [Be sure that you use a browser that supports WebRTC](http://iswebrtcreadyyet.com)
+and your desktop computer has a working camera device connected! 
+This demo solution was tested with Google Chrome 50.x. 
+
+To make a test video chat follow these steps:
+* Open your bwoser with [https://webrtcdemo.openshift.local](https://webrtcdemo.openshift.local)
+* Give your name in the input field
+* Click "Wait somebody to join..."
+* The browser will ask you to allow the access to the camera and the microphone. Allow the access to them! Your camera's view has to be shown on the page
+* A video chat room with your name is created and other people can join to the opened conversation (video chat room). Currently only 2-party conversations are allowed by the application
+* Open a new tab in your browser and go the [https://webrtcdemo.openshift.local](https://webrtcdemo.openshift.local)
+* You should see the name of your previously created video chat room under "People waiting for your to join:"
+* Give your name in the input field (choose another name that you have used in the step above)
+* Click the pink camera icon next to the name of the chat room
+* The two parties have to be connected
+
+Alternatively you can try the 2-party video conversation from 2 desktop computers (instead of using one desktop with one browser and two tabs).
+
+If you want to rebuild your application (e.g. because of changes in the source code on GitHub) then go to the master node, login to OpenShift, set the currently active project to webrtcdemo and type the following:
 
 ```
 oc start-build webrtcdemo-build
