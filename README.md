@@ -207,3 +207,24 @@ oc start-build webrtcdemo-build
 ```
 
 After about 2 minutes the new version of the application should be available.
+
+## Remove the application from the project
+
+In order to remove all application related OpenShift artifacts (route, services, deployment configs, build config) from the project issue the following commands:
+
+```
+oc project webrtcdemo
+oc delete routes webrtcdemo-route
+oc delete services webrtcdemo-service
+oc delete dc webrtcdemo
+oc delete bc webrtcdemo-build
+oc delete services gossip-service
+oc delete dc gossip
+```
+
+After the artifats are successfully deleted the application can be fully re-created by calling:
+
+```
+oc project webrtcdemo
+oc new-app -f webrtcdemo-template.json
+```
