@@ -205,6 +205,7 @@ To make a test video chat follow these steps:
 * Give your name in the input field (choose another name that you have used in the step above)
 * Click the pink camera icon next to the name of the chat room
 * The two parties have to be connected
+* In a separate browser tab check the following URL: [https://webrtcdemo.openshift.local/conversationdetails/list](https://webrtcdemo.openshift.local/conversationdetails/list). The result JSON should contain the details of your video conversation (the name of the POD handling the conversation and the names of the parties)
 
 Alternatively you can try the 2-party video conversation from 2 desktop computers (instead of using one desktop with one browser and two tabs).
 
