@@ -68,7 +68,12 @@ public class ConversationsCache {
 		ConversationCacheEntry c = (ConversationCacheEntry)this.cache.get(name);
 		if(c != null) {
 			c.members.remove(member);
-			this.cache.put(name, c);
+			if(c.members.size() == 0) {
+				removeConversation(String name);
+			}
+			else {
+				this.cache.put(name, c);
+			}
 		}
 	}
 
