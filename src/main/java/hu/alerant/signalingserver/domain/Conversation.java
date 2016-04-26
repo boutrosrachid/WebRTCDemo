@@ -4,6 +4,7 @@ import javax.annotation.PreDestroy;
 
 import com.google.common.collect.Sets;
 import lombok.Getter;
+import lombok.extern.log4j.Log4j;
 import hu.alerant.signalingserver.api.dto.WebRTCConversation;
 import hu.alerant.signalingserver.cases.ExchangeSignalsBetweenMembers;
 import hu.alerant.signalingserver.cases.JoinMember;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+@Log4j
 @Getter
 @Component
 @Scope("prototype")
@@ -88,6 +90,11 @@ public class Conversation implements WebRTCConversation{
 
 	@PreDestroy
 	public void cleanUp() throws Exception {
+		log.debug("#############################################################x");
+		log.debug("#############################################################x");
+		log.debug("cleanUp");
+		log.debug("#############################################################x");
+		log.debug("#############################################################x");
 		for(Member m : members) {
 			left(m);
 		}
