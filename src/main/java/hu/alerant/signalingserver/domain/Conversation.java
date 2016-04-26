@@ -88,12 +88,13 @@ public class Conversation implements WebRTCConversation {
 
 	public void destroy() {
 		log.debug("cleanUp - Conversation");
-		Set<Member> cloned = Sets.newConcurrentHashSet();
-		for(Member m : members) {
-			cloned.add(m);
-		}
-		for(Member m : cloned) {
-			left(m);
+		for (Member leaving : members) {
+			for (Member member : members) {
+				if(!leaving.getId().equals(member.getId())) {
+					left.executeFor(leaving, member);
+				}
+			}
+	        cache.removeMemberFromConversation(id, leaving.getName());
 		}
 	}
 
