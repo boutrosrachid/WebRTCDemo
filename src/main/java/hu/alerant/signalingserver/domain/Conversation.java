@@ -1,5 +1,7 @@
 package hu.alerant.signalingserver.domain;
 
+import javax.annotation.PreDestroy;
+
 import com.google.common.collect.Sets;
 import lombok.Getter;
 import hu.alerant.signalingserver.api.dto.WebRTCConversation;
@@ -84,4 +86,12 @@ public class Conversation implements WebRTCConversation{
 		exchange.execute(message);
 	}
 
+	@PreDestroy
+	public void cleanUp() throws Exception {
+		for(Member m : members) {
+			left(m);
+		}
+	}
+
 }
+
