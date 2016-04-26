@@ -53,7 +53,7 @@
 					var str = '<table width="250px" style="margin: 0 auto;">';
 					var count = 0;
 					$.each(data, function (index, value) {
-						if(value.length == 1 && createdConvId != index) {
+						if(value.length == 1 && createdConvId != index && $('#memberName').val() != value[0]) {
 							str = str + '<tr><td>' + value[0] + '</td><td><img style="vertical-align:middle; cursor:pointer;" width="32px" height="32px" src="images/video-camera.png" onClick="joinConversation(\'' + index + '\', \'' + value[0] + '\')"/></td></tr>';
 							count++;
 						}
