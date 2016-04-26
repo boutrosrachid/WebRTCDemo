@@ -9,8 +9,11 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.concurrent.ScheduledExecutorFactoryBean;
 
+import lombok.extern.log4j.Log4j;
+
 import java.util.concurrent.ScheduledExecutorService;
 
+@Log4j
 @Configuration
 @ComponentScan(basePackageClasses = {WebRTCConfig.class})
 public class WebRTCConfig {

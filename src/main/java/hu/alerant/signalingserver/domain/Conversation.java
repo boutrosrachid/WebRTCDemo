@@ -1,6 +1,5 @@
 package hu.alerant.signalingserver.domain;
 
-import javax.annotation.PreDestroy;
 
 import com.google.common.collect.Sets;
 import lombok.Getter;
@@ -13,14 +12,13 @@ import hu.alerant.signalingserver.cache.ConversationsCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-
 import java.util.Set;
 
 @Log4j
 @Getter
 @Component
 @Scope("prototype")
-public class Conversation implements WebRTCConversation{
+public class Conversation implements WebRTCConversation {
 
 	@Autowired
 	private ExchangeSignalsBetweenMembers exchange;
@@ -88,13 +86,8 @@ public class Conversation implements WebRTCConversation{
 		exchange.execute(message);
 	}
 
-	@PreDestroy
-	public void cleanUp() throws Exception {
-		log.debug("#############################################################x");
-		log.debug("#############################################################x");
-		log.debug("cleanUp");
-		log.debug("#############################################################x");
-		log.debug("#############################################################x");
+	public void destroy() {
+		log.debug("cleanUp - Conversation");
 		for(Member m : members) {
 			left(m);
 		}

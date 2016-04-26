@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Repository;
 
+import lombok.extern.log4j.Log4j;
+
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
@@ -18,6 +20,7 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static hu.alerant.signalingserver.exception.Exceptions.CONVERSATION_NAME_OCCUPIED;
 import static hu.alerant.signalingserver.exception.Exceptions.INVALID_CONVERSATION_NAME;
 
+@Log4j
 @Repository
 public class Conversations {
 
@@ -83,4 +86,12 @@ public class Conversations {
 		}
 		return Optional.empty();
 	}
+
+	public void destroy() {
+		log.debug("cleanUp - Conversations");
+		for(Conversation c : conversations.values()) {
+			c.destroy();
+		}
+	}
+
 }
