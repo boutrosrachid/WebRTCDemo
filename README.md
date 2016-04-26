@@ -16,9 +16,10 @@ Login to OpenShift and Docker on the master node with a user having cluster-admi
 oc login
 ```
 
-Get security token:
+Set the current project name to "default" and get your security token:
 
 ```
+oc project default
 oc whoami -t
 ```
 
@@ -173,6 +174,13 @@ Set the currently active project to webrtcdemo and create all OpenShift resource
 
 ```
 oc project webrtcdemo
+```
+Replace the "hard-coded" Docker Registry IP with the actual value:
+```
+sed -i -e 's/172.30.169.170/'$DOCKER_REGISTRY_IP'/g' webrtcdemo-template.json
+```
+Create the application:
+```
 oc new-app -f webrtcdemo-template.json
 ```
 
