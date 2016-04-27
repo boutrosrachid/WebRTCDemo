@@ -117,6 +117,12 @@ docker build --build-arg http_proxy=$HTTP_PROXY --build-arg https_proxy=$HTTPS_P
 ```
 Build WildFly 8.1 source-to-image (move to the wildfly81-dist-cache folder that was created when you copied the downloaded zip content to the master node).
 
+Modify the access rights of the files located in wildfly81-dist-cache/s2i/bin:
+
+```
+chmod 777 s2i/bin/*
+```
+
 If you do not use HTTP proxy for Docker: 
 ```
 docker build -t $DOCKER_REGISTRY_IP:5000/webrtcdemo/wildfly81distcache:v1 .
