@@ -43,7 +43,7 @@ systemctl restart docker
 systemctl status docker 
 ```
 
-Set the HTTP proxy related system environment variables:
+Set the HTTP proxy related system environment variables on all openShift nodes (master and workers):
 ```
 vi /etc/environment 
 ```
