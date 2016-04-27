@@ -8,8 +8,65 @@ Features implemented:
 * Enable OpenShift scaling: the parties belonging to the same video conversation will connect to the same server instance (POD) with WebSocket connection and the created conversation descriptions will be available for all PODs (data synchronization is done using Infinispan cache configured to use JGroups TUNNEL via Gossip Router)
 
 ## Installation
+### Optional step, set HTTP proxy
+If your environment accesses the Internet via HTTP proxy then you will need to perform the steps below.
+```
+oc login
+```
+
+Set the current project name to "default":
+
+```
+oc project default
+```
+
+Get Docker Registry IP address and store it in DOCKER_REGISTRY_IP environment variable for later use:
+
+```
+export DOCKER_REGISTRY_IP=$(oc get svc docker-registry --template "{{ .spec.portalIP }}")
+echo $DOCKER_REGISTRY_IP
+```
+
+Set the HTTP proxy for Docker on all openShift nodes (master and workers).
+```
+vi /etc/sysconfig/docker 
+```
+Set the follwing parameters:
+```
+HTTPS_PROXY=<write your HTTPS proxy URL here>
+HTTP_PROXY=<write your HTTP proxy URL here>
+NO_PROXY=<write here the value of DOCKER_REGISTRY_IP that was previously queried and all additional IPS addresses/host names that should not be passed via the proxy>
+```
+Restart Docker and check its status whether it has started successfully:
+```
+systemctl restart docker
+systemctl status docker 
+```
+
+Set the HTTP proxy related system environment variables:
+```
+vi /etc/environment 
+```
+Set the following parameters:
+```
+https_proxy='<write your HTTPS proxy URL here>'
+
+http_proxy='<write your HTTP proxy URL here>'
+
+HTTPS_PROXY='<write your HTTPS proxy URL here>'
+
+HTTP_PROXY='<write your HTTP proxy URL here>'
+
+no_proxy='<write here the value of DOCKER_REGISTRY_IP that was previously queried and all additional IPS addresses/host names that should not be passed via the proxy>'
+
+NO_PROXY='<write here the value of DOCKER_REGISTRY_IP that was previously queried and all additional IPS addresses/host names that should not be passed via the proxy>'
+```
+
+Make a logout/login to enable new environment varuables.
+
 ### Preparing phase I., create OpenShift resources on master node
 Download the OpenShift v3 artifacts from [here](https://github.com/darmaigabor/WebRTCDemo_OpenShift_v3_Files) as a zip file and copy the zip content to the OpenShift master node.
+
 Login to OpenShift and Docker on the master node with a user having cluster-admin role:
 
 ```
@@ -47,16 +104,26 @@ Set the new project as your actual working project:
 oc project webrtcdemo
 ```
 
-Build Gossip Router image (move to the jgroups-gossip folder that was created when you copied the downloaded zip content to the master node):
+Build Gossip Router image (move to the jgroups-gossip folder that was created when you copied the downloaded zip content to the master node).
 
+If you do not use HTTP proxy for Docker: 
+```
+docker build -t $DOCKER_REGISTRY_IP:5000/webrtcdemo/gossip:v1 .
+```
+If you use HTTP proxy for Docker:
+
+```
+docker build --build-arg http_proxy=$HTTP_PROXY --build-arg https_proxy=$HTTPS_PROXY -t $DOCKER_REGISTRY_IP:5000/webrtcdemo/gossip:v1 .
+```
+Build WildFly 8.1 source-to-image (move to the wildfly81-dist-cache folder that was created when you copied the downloaded zip content to the master node).
+
+If you do not use HTTP proxy for Docker: 
 ```
 docker build -t $DOCKER_REGISTRY_IP:5000/webrtcdemo/wildfly81distcache:v1 .
 ```
-
-Build WildFly 8.1 source-to-image (move to the wildfly81-dist-cache folder that was created when you copied the downloaded zip content to the master node):  
-
+If you use HTTP proxy for Docker:
 ```
-docker build -t $DOCKER_REGISTRY_IP:5000/webrtcdemo/gossip:v1 .
+docker build --build-arg http_proxy=$HTTP_PROXY --build-arg https_proxy=$HTTPS_PROXY -t $DOCKER_REGISTRY_IP:5000/webrtcdemo/wildfly81distcache:v1 .
 ```
 
 Push the created images to the Docker registry:
