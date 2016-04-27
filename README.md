@@ -215,7 +215,7 @@ Push the created image to the Docker registry:
 docker push $DOCKER_REGISTRY_IP:5000/default/origin-haproxy-router:webrtcdemo_route
 ```
 
-Remove the existing HAProxy router service from OpenShift:
+Remove the existing HAProxy router service from OpenShift (if the name of the deployment config and the service is different from "router" then change the name accordingly):
 
 ```
 oc delete services router
